@@ -1,31 +1,85 @@
 //calculatrice
 
+//constante
 const spanbouton=document.querySelectorAll('span')
 const ecran=document.querySelector('.container-ecran')
 const boutonclear=document.querySelector('.delete')
 const lotion=document.querySelectorAll('.lotion')
 const chiffre=document.querySelectorAll('.chiffre')
+const opt=document.querySelectorAll('.opérateur')
+const egal=document.querySelector('.egal')
+const multiplication=document.querySelector('.multiplication')
+const division=document.querySelector('.division')
 let valeurEcran=0; // initialisation de l'écran
 ecran.innerHTML=`
     <h3> ${valeurEcran}</h3>
 `
+//3 variables pour calculer
+let nombre1='';
+let nombre2='';
+let opérateur;
+let resultat;
 // const division=document.querySelector('.division')
 // division.addEventListener('click',()=>{
 //     division.style.color='orange'
 // })
-
+let condition=true
 let click=1;
 
-console.log(chiffre)
+// console.log(chiffre)
+//-------------------------------
+//FONCTION
+
+//fonction calcul
+function calcul(nb1,nb2,op){
+    let resultat=eval(`${nb1} ${op} ${nb2}`)
+    return resultat
+}
+// function reintialise(a){
+//     a=0; 
+//     ecran.innerHTML=`
+//         <h3> ${a}</h3>
+//     `
+// }
 
 
+//--------------------------------------
 //animation des boutons
 
 spanbouton.forEach(box => {
     box.addEventListener('click', (e)=>{
+        chiffre.forEach(chiffre => {
+            if(e.target==chiffre && condition==true){
+                nombre1+=e.target.innerHTML
+                console.log('ok prenons le premier chiffre')
+                console.log('le nombre 1 est égal à '+ nombre1)
+            }
+            else if(e.target==chiffre && condition==false){
+                nombre2+=e.target.innerHTML
+                console.log("ok prenons le deuxième chiffre")
+                console.log('le nombre 2 est égal à ' +nombre2)
+            }
+        
+        });
+        opt.forEach( opt =>{
+            if(e.target==opt){
+                opérateur=e.target.innerHTML
+                console.log('il a cliqué sur un opérateur')
+                condition=false
+                console.log(opérateur)
+                
+            }else if(e.target==multiplication){
+                console.log('la multiplication a marché')
+                opérateur='*'
+            }else if(e.target==division){
+                console.log('la multiplication a marché')
+                opérateur='/'
+            }
+        })
 
+        
 //initialisation du zero 
-
+        
         if (valeurEcran === 0) {
             valeurEcran = e.target.innerHTML;
         } else {
@@ -35,7 +89,7 @@ spanbouton.forEach(box => {
 
         if(e.target.innerText==='÷'){
 
-            console.log("j'ai selectionner la division")
+            // console.log("j'ai selectionner la division")
             e.target.classList.add('lotion')
 
             
@@ -44,19 +98,19 @@ spanbouton.forEach(box => {
             // }
             
         }else if(e.target.innerText==='x'){
-            console.log("j'ai selectionner la x ")
+            // console.log("j'ai selectionner la x ")
             e.target.classList.add('lotion')
 
         }else if(e.target.innerText==='-'){
-            console.log("j'ai selectionner la - ")
+            // console.log("j'ai selectionner la - ")
             e.target.classList.add('lotion')
 
         }else if(e.target.innerText==='+') {
-            console.log("j'ai selectionner la +")
+            // console.log("j'ai selectionner la +")
             e.target.classList.add('lotion')
 
         }else if(e.target.innerText==='='){
-            console.log("j'ai selectionner la =")
+            // console.log("j'ai selectionner la =")
             e.target.classList.add('animation')
 
         }else{
@@ -70,21 +124,33 @@ spanbouton.forEach(box => {
         setTimeout(()=>{
             e.target.classList.remove('animation')
         },1000)
-    })      
-//les calculs
-
-
 // calcul(nb1,nb2,op)
 
+        // if(click==1 ){
+        //     nombre1=e.target.innerHTML
+        //     click++
+        //     // console.log('il est rentré dans le if')
+        // }
+        // else if(click==2){
+        //     opérateur=e.target.innerHTML
+        //     click++
+        //     // console.log('il est rentré dans le first else if')
 
+        // }else if(click==3){
+        //     nombre2=e.target.innerHTML
+        //     // console.log('il est rentré dans le second else if')
+        //     //affichage du resultat
+        //     resultat= calcul(nombre1,nombre2,opérateur)
+        //     valeurEcran=resultat
+        //     ecran.innerHTML=`
+        //     <h3> ${valeurEcran}</h3>
+            
+        //     `
+        //     click=1
+        // }
 
-
-
-
-
-
-
-
+    
+    })      
 
     box.addEventListener('mouseover',(e)=>{
         e.target.style.cursor='pointer'
@@ -103,14 +169,12 @@ boutonclear.addEventListener('click',()=>{
     })
 })
 
-//fonction calcul
-function calcul(nb1,nb2,op){
-    let resultat=eval(`${nb1} ${op} ${nb2}`)
-    return resultat
-}
-//3 variables pour calculer
-let nombre1;
-let nombre2;
-let opérateur;
-
-// console.log(calcul(1,2,''))
+egal.addEventListener('click',()=>{
+    
+    resultat=calcul(nombre1,nombre2,opérateur)
+    console.log(resultat)
+    valeurEcran=resultat
+    ecran.innerHTML=`
+    <h3> ${valeurEcran}</h3>
+`
+})

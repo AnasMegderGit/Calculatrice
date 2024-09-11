@@ -50,19 +50,29 @@ spanbouton.forEach(box => {
     box.addEventListener('click', (e)=>{
         chiffre.forEach(chiffre => {
             if(e.target==chiffre && condition==true){
+                valeurEcran=0
+                ecran.innerHTML=`
+                    <h3> ${valeurEcran}</h3>
+                `
                 nombre1+=e.target.innerHTML
                 console.log('ok prenons le premier chiffre')
                 console.log('le nombre 1 est égal à '+ nombre1)
+                boutonclear.innerText='C'
             }
             else if(e.target==chiffre && condition==false){
+                // lotion.classList.remove('lotion')
+                valeurEcran=nombre2
                 nombre2+=e.target.innerHTML
                 console.log("ok prenons le deuxième chiffre")
-                console.log('le nombre 2 est égal à ' +nombre2)
+                console.log('le nombre 2 est égal à ' + nombre2)
+                document.querySelectorAll('.lotion').forEach(lotion =>{
+                    lotion.classList.remove('lotion')
+                })
             }
         
         });
         opt.forEach( opt =>{
-            if(e.target==opt){
+            if(e.target==opt && condition==true){
                 opérateur=e.target.innerHTML
                 console.log('il a cliqué sur un opérateur')
                 condition=false
@@ -91,13 +101,17 @@ spanbouton.forEach(box => {
 
             // console.log("j'ai selectionner la division")
             e.target.classList.add('lotion')
+            // if(nombre2!=''){
+            //     e.target.classList.remove('lotion')
 
+            // }
             
             // if(){
 
             // }
             
         }else if(e.target.innerText==='x'){
+            valeurEcran=nombre1
             // console.log("j'ai selectionner la x ")
             e.target.classList.add('lotion')
 
@@ -160,10 +174,13 @@ spanbouton.forEach(box => {
 //Ecran
 
 boutonclear.addEventListener('click',()=>{
+    boutonclear.innerText='AC'
     valeurEcran=0
     ecran.innerHTML=`
     <h3> ${valeurEcran}</h3>
     `   
+    condition=true
+    
     document.querySelectorAll('.lotion').forEach(lotion =>{
         lotion.classList.remove('lotion')
     })
@@ -177,4 +194,13 @@ egal.addEventListener('click',()=>{
     ecran.innerHTML=`
     <h3> ${valeurEcran}</h3>
 `
+    condition=true
+
+    nombre1='';
+    nombre2='';
+    opérateur='';
+    console.log(nombre1)
+    console.log(nombre2)
+    console.log(opérateur)
+
 })
